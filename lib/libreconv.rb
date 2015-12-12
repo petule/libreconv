@@ -16,6 +16,7 @@ module Libreconv
     def initialize(source, target, soffice_command = nil, convert_to = nil)
       @source = source
       @target = target
+      @target_path = Dir.tmpdir
       @soffice_command = soffice_command
       @convert_to = convert_to || "pdf"
       determine_soffice_command
@@ -29,13 +30,11 @@ module Libreconv
     def convert
       orig_stdout = $stdout.clone
       $stdout.reopen File.new('/dev/null', 'w')
-      Dir.mktmpdir { |target_path|
-        system "sudo #{@soffice_command} --invisible --headless --convert-to #{@convert_to} --outdir #{@target_path} #{@source}"
-        $stdout.reopen orig_stdout
-        target_tmp_file = "#{target_path}/#{File.basename(@source, ".*")}.#{File.basename(@convert_to, ":*")}"
-        FileUtils.cp target_tmp_file, @target
-        system " sudo rm #{target_tmp_file}"
-      }
+      system "sudo #{@soffice_command} --invisible --headless --convert-to #{@convert_to} --outdir #{@target_path} #{@source}"
+      $stdout.reopen orig_stdout
+      target_tmp_file = "#{@target_path}/#{File.basename(@source, ".*")}.#{File.basename(@convert_to, ":*")}"
+      FileUtils.cp target_tmp_file, @target
+      system " sudo rm #{target_tmp_file}"
     end
 
     private
