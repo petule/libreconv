@@ -22,7 +22,7 @@ Or install it yourself as:
 
 ## Usage
 
-You need to install Libreoffice or Openoffice on your system to use this gem. The code has been tested with Libreoffice 4.4.
+You need to install Libreoffice or Openoffice on your system to use this gem. The code has been tested with Libreoffice 5.0.2.2
 
 ```ruby
 require 'libreconv'
@@ -48,6 +48,8 @@ Libreconv.convert('document.docx', '/Users/ricn/pdf_documents/my_document_as.htm
 # Converts document.docx to my_document_as.pdf using writer_pdf_Export filter
 Libreconv.convert('document.docx', '/Users/ricn/pdf_documents/my_document_as.pdf', nil, 'pdf:writer_pdf_Export')
 
+# Converts document.html to my_document_as.docx using docx filter
+Libreconv.convert('document.docx', '/Users/ricn/pdf_documents/my_document_as.pdf', nil, 'docx:"MS Word 2007 XML"')
 ```
 
 ## Credits
