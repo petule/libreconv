@@ -30,11 +30,11 @@ module Libreconv
       orig_stdout = $stdout.clone
       $stdout.reopen File.new('/dev/null', 'w')
       Dir.mktmpdir { |target_path|
-        pid = Spoon.spawnp(@soffice_command, "--headless", "--convert-to", @convert_to, @source, "--outdir", target_path)
-        Process.waitpid(pid)
+        system "sudo #{@soffice_command} --invisible --headless --convert-to #{@convert_to} --outdir #{@target_path} #{@source}"
         $stdout.reopen orig_stdout
         target_tmp_file = "#{target_path}/#{File.basename(@source, ".*")}.#{File.basename(@convert_to, ":*")}"
         FileUtils.cp target_tmp_file, @target
+        system " sudo rm #{target_tmp_file}"
       }
     end
 
