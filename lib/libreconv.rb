@@ -30,6 +30,7 @@ module Libreconv
     def convert
       orig_stdout = $stdout.clone
       $stdout.reopen File.new('/dev/null', 'w')
+      Rails.logger.debug  "sudo #{@soffice_command} --invisible --headless --convert-to #{@convert_to} --outdir #{@target_path} #{@source}"
       system "sudo #{@soffice_command} --invisible --headless --convert-to #{@convert_to} --outdir #{@target_path} #{@source}"
       $stdout.reopen orig_stdout
       target_tmp_file = "#{@target_path}/#{File.basename(@source, ".*")}.#{File.basename(@convert_to, ":*")}"
