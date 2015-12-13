@@ -35,7 +35,7 @@ module Libreconv
       $stdout.reopen orig_stdout
       target_tmp_file = "#{@target_path}/#{File.basename(@source, ".*")}.#{File.basename(@convert_to, ":*")}"
       FileUtils.cp target_tmp_file, @target
-      system "  rm #{target_tmp_file}"
+     # system "  rm #{target_tmp_file}"
     end
 
     private
